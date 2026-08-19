@@ -21,6 +21,7 @@ type ParameterValues struct {
 	TicketRequireDescription         bool                    `json:"ticket_require_description"`
 	TicketRequestShowAllTargets      bool                    `json:"ticket_request_show_all_targets"`
 	TargetClickAction                string                  `json:"target_click_action,omitempty"`
+	OpenTargetsInNewTab              string                  `json:"open_targets_in_new_tab"`
 	ShowSessionMenu                  bool                    `json:"show_session_menu"`
 	PasswordPolicy                   PasswordPolicy          `json:"password_policy"`
 	MaxAPITokenDurationSeconds       int64                   `json:"max_api_token_duration_seconds,omitempty"`
@@ -100,6 +101,7 @@ type ParametersUpdateRequest struct {
 	TicketRequireDescription         *bool                    `json:"ticket_require_description,omitempty"`
 	TicketRequestShowAllTargets      *bool                    `json:"ticket_request_show_all_targets,omitempty"`
 	TargetClickAction                *string                  `json:"target_click_action,omitempty"`
+	OpenTargetsInNewTab              *string                  `json:"open_targets_in_new_tab,omitempty"`
 	ShowSessionMenu                  *bool                    `json:"show_session_menu,omitempty"`
 	PasswordPolicy                   *PasswordPolicy          `json:"password_policy,omitempty"`
 	MaxAPITokenDurationSeconds       *int64                   `json:"max_api_token_duration_seconds,omitempty"`

@@ -26,6 +26,7 @@ resource "warpgate_parameters" "global_settings" {
   ticket_require_description          = true
   ticket_request_show_all_targets     = false
   target_click_action                 = "Connect"
+  open_targets_in_new_tab             = "DefaultOn"
   show_session_menu                   = true
 
   password_policy {
@@ -114,6 +115,7 @@ The following arguments are supported:
 * `ticket_require_description` - (Optional) Require a description for ticket requests.
 * `ticket_request_show_all_targets` - (Optional) Show all targets when requesting tickets.
 * `target_click_action` - (Optional) Action to take when clicking a target. Allowed values: `Connect`, `ShowInstructions`.
+* `open_targets_in_new_tab` - (Optional) How the portal decides whether targets open in a new browser tab. Allowed values: `DefaultOn`, `DefaultOff`, `ForcedOn`, `ForcedOff`.
 * `show_session_menu` - (Optional) When enabled, Warpgate injects a session menu into HTTP sessions, allowing users to log out or return to the home page.
 * `password_policy` - (Optional) Password policy rules.
 * `max_api_token_duration_seconds` - (Optional) Maximum API token duration in seconds.
@@ -154,6 +156,8 @@ The following arguments are supported:
       * `secret_access_key` - (Optional) Secret access key. The API never returns it, so it is carried over from configuration on read; omit to keep the secret already stored in Warpgate.
 
 ~> **Note** `recordings_enable` and `recordings_storage` require Warpgate 0.27 or newer, where recording storage moved out of `warpgate.yaml` into the database.
+
+~> **Note** `open_targets_in_new_tab` requires Warpgate 0.28 or newer.
 
 ## Attribute Reference
 
@@ -210,6 +214,7 @@ tofu import warpgate_parameters.global_settings parameters
 - `lp_user_max_attempts` (Number) Maximum failed login attempts per user.
 - `lp_user_time_window_seconds` (Number) Time window for failed login attempts per user, in seconds.
 - `max_api_token_duration_seconds` (Number) Maximum API token duration in seconds.
+- `open_targets_in_new_tab` (String) How the portal decides whether targets open in a new browser tab.
 - `password_login_mode` (String) How the password login form is presented on the gateway login page.
 - `password_policy` (Block List, Max: 1) Password policy rules. (see [below for nested schema](#nestedblock--password_policy))
 - `rate_limit_bytes_per_second` (Number) Global bandwidth limit

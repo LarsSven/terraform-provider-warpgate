@@ -13,6 +13,26 @@ func stringPtr(v string) *string { return &v }
 
 func boolPtr(v bool) *bool { return &v }
 
+func TestOpenTargetsInNewTabValidation(t *testing.T) {
+	for _, mode := range []string{"DefaultOn", "DefaultOff", "ForcedOn", "ForcedOff"} {
+		diags := resourceParameters().Validate(terraform.NewResourceConfigRaw(map[string]any{
+			"allow_own_credential_management": true,
+			"open_targets_in_new_tab":         mode,
+		}))
+		if diags.HasError() {
+			t.Fatalf("expected %q to validate, got %+v", mode, diags)
+		}
+	}
+
+	diags := resourceParameters().Validate(terraform.NewResourceConfigRaw(map[string]any{
+		"allow_own_credential_management": true,
+		"open_targets_in_new_tab":         "Always",
+	}))
+	if !diags.HasError() {
+		t.Fatal("expected an error for an invalid open_targets_in_new_tab value")
+	}
+}
+
 func TestExpandRecordingsStorageDisk(t *testing.T) {
 	cfg := buildRecordingsStorage(map[string]any{
 		"disk": []any{

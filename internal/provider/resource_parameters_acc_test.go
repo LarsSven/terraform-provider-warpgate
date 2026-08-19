@@ -74,6 +74,14 @@ resource "warpgate_parameters" "test" {
 }
 `
 
+const testAccParameters028Fields = `
+resource "warpgate_parameters" "test" {
+	allow_own_credential_management = true
+
+	open_targets_in_new_tab = "ForcedOff"
+}
+`
+
 // A fresh 0.27 database seeds recordings_enable = false with the upstream
 // default path, ignoring warpgate.yaml, so turning recording on is only
 // possible through these parameters.
@@ -200,6 +208,30 @@ func TestAccParameters027Fields(t *testing.T) {
 
 						if params.WebAuthMaxAgeSeconds != 28800 {
 							return fmt.Errorf("expected 28800 in Warpgate, got %d", params.WebAuthMaxAgeSeconds)
+						}
+
+						return nil
+					},
+				),
+			},
+		},
+	})
+}
+
+func TestAccParameters028Fields(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testAccProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccParameters028Fields,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("warpgate_parameters.test", "open_targets_in_new_tab", "ForcedOff"),
+					func(*terraform.State) error {
+						params := testAccParameters(t)
+
+						if params.OpenTargetsInNewTab != "ForcedOff" {
+							return fmt.Errorf("expected ForcedOff in Warpgate, got %q", params.OpenTargetsInNewTab)
 						}
 
 						return nil
