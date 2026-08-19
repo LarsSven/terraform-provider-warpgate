@@ -5,17 +5,14 @@
 #   eval "$(scripts/test-warpgate.sh start)"
 #   TF_ACC=1 go test ./internal/provider/ -run TestAcc -v
 #   scripts/test-warpgate.sh stop
-#
-# Uses the release binary rather than a container image: ghcr.io/warp-tech/warpgate
-# has no 0.27 tag yet.
 set -euo pipefail
 
-VERSION="${WARPGATE_VERSION:-0.27.3}"
+VERSION="${WARPGATE_VERSION:-0.28.0}"
 PORT="${WARPGATE_TEST_PORT:-18888}"
 TOKEN="${WARPGATE_TEST_TOKEN:-acctest-admin-token}"
 RUNDIR="${WARPGATE_TEST_DIR:-${TMPDIR:-/tmp}/warpgate-acctest}"
 
-BIN="$RUNDIR/warpgate"
+BIN="$RUNDIR/warpgate-v${VERSION}"
 PIDFILE="$RUNDIR/warpgate.pid"
 
 detect_asset() {
